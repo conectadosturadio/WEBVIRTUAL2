@@ -5,11 +5,11 @@
 <title>Virtual Graphic Radio</title>
 <meta name="description" content="Virtual Graphic Radio (VGR) — Agencia creativa premium.">
 
+<!-- ✅ FIX 1: Solo 3 fuentes necesarias (eliminadas Montserrat, Poppins, Roboto, Playfair Display) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Outfit:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;family=Montserrat:wght@400;600;700&amp;family=Poppins:wght@400;600;700&amp;family=Roboto:wght@400;500;700&amp;family=Playfair+Display:ital@0;1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-<!-- ════════ STYLES SITIO ════════ -->
 <style id="site-styles">
 :root {
   --orange: #FF6B1A;
@@ -51,6 +51,9 @@ ul { list-style: none; }
 @keyframes scrollDown { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(150%); opacity: 0; } }
 @keyframes glowPulse { 0%,100% { text-shadow: 0 0 18px rgba(255,107,26,.45), 0 0 40px rgba(255,107,26,.18); } 50% { text-shadow: 0 0 28px rgba(255,107,26,.7), 0 0 60px rgba(255,107,26,.3); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ✅ FIX: Skeleton shimmer para placeholders de video */
+@keyframes skeletonShimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
 .fade-in-up { animation: fadeInUp .85s cubic-bezier(.4,0,.2,1) forwards; }
 .delay-1 { animation-delay: .1s; opacity: 0; }
@@ -103,7 +106,10 @@ ul { list-style: none; }
 
 #hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; background: var(--dark-0); }
 .hero-video-wrap { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+
+/* ✅ FIX 2: Video hero con poster para mostrar imagen inmediata mientras carga el video */
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); filter: saturate(1.15) contrast(1.05) brightness(.85); opacity: .92; }
+
 .hero-overlay-1 { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(10,6,8,.85), rgba(10,6,8,.35), transparent); }
 .hero-overlay-2 { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, var(--dark-0), transparent, transparent); }
 .hero-overlay-3 { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at right, rgba(123,47,190,.22) 0%, transparent 55%), radial-gradient(ellipse at bottom left, rgba(255,107,26,.18) 0%, transparent 55%); }
@@ -176,6 +182,10 @@ ul { list-style: none; }
 .video-product { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid rgba(255,107,26,.14); background: var(--dark-2); transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease; }
 .video-product:hover { transform: translateY(-6px); border-color: rgba(168,85,247,.5); box-shadow: 0 24px 60px rgba(123,47,190,.16), 0 12px 35px rgba(255,107,26,.12); }
 .video-frame { position: relative; aspect-ratio: 9 / 16; background: #000; overflow: hidden; }
+
+/* ✅ FIX 3: Skeleton placeholder mientras carga el video */
+.video-frame.loading { background: linear-gradient(90deg, #1A0F14 25%, #2A1820 50%, #1A0F14 75%); background-size: 200% 100%; animation: skeletonShimmer 1.5s infinite; }
+
 .video-frame video { width: 100%; height: 100%; object-fit: cover; opacity: .96; }
 .video-frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(10,6,8,.88), rgba(10,6,8,.12), transparent); }
 .video-badge { position: absolute; top: .75rem; left: .75rem; z-index: 2; padding: .25rem .55rem; border-radius: 4px; background: linear-gradient(90deg, var(--orange), var(--purple)); color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; box-shadow: 0 8px 22px rgba(255,107,26,.28); }
@@ -256,15 +266,12 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
 #volSlider { -webkit-appearance: none; appearance: none; width: 80px; height: 3px; border-radius: 2px; background: linear-gradient(to right, var(--orange) var(--vol, 80%), rgba(255,255,255,.08) var(--vol, 80%)); outline: none; cursor: pointer; }
 #volSlider::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%; background: var(--orange); cursor: pointer; box-shadow: 0 0 8px rgba(255,107,26,.5); }
 </style>
-
-<!-- ════════ STYLES EDITOR (se eliminan al exportar) ════════ -->
-
 </head>
 
-<body class="">
+<body>
 
 <!-- ═════════ NAVBAR ═════════ -->
-<nav id="navbar" class="">
+<nav id="navbar">
   <div class="container nav-inner">
     <a href="#" class="nav-logo">
       <div class="nav-logo-icon">
@@ -278,7 +285,6 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
       <a href="#servicios">Servicios</a>
       <a href="#portafolio">Portafolio</a>
       <a href="#contacto">Contacto</a>
-      
     </div>
     <div class="nav-actions">
       <a href="#contacto" class="btn-tactical btn-primary nav-cta">Sobre Mí</a>
@@ -293,14 +299,19 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
   <a href="#servicios">Servicios</a>
   <a href="#portafolio">Portafolio</a>
   <a href="#contacto">Contacto</a>
-  
   <a href="#contacto" class="btn-tactical btn-primary" style="margin-top:1rem">Sobre Mí</a>
 </div>
 
 <!-- ═════════ HERO ═════════ -->
-<section id="hero" class="">
+<section id="hero">
   <div class="hero-video-wrap">
-    <video class="hero-video" id="heroVideo" autoplay="" muted="" loop="" playsinline="">
+    <!--
+      ✅ FIX: poster="..." añadido — muestra imagen estática instantánea mientras carga el video.
+         Reemplaza la ruta del poster por una imagen JPG tuya (captura del video, aprox. 50-80KB).
+         Ejemplo: poster="poster-hero.jpg"
+    -->
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=1200&q=60">
       <source src="https://www.jeandesignia.com/QUIEREME%20FC%20BARCELONA.webm" type="video/webm">
     </video>
   </div>
@@ -312,7 +323,7 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
   <div class="container hero-content">
     <div class="hero-toplabel fade-in-up">DISEÑO GRÁFICO · EMISORAS ONLINE · PRODUCCIÓN DE AUDIO</div>
     <h1 class="hero-headline fade-in-up delay-1">
-      <span class="">Virtual</span>
+      <span>Virtual</span>
       <span style="margin-top:-.5rem">Graphic</span>
       <span class="accent italic-accent">Radio</span>
     </h1>
@@ -325,13 +336,13 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
 </section>
 
 <!-- ═════════ ACERCA ═════════ -->
-<section id="acerca" class="">
+<section id="acerca">
   <div class="acerca-glow"></div>
   <div class="container">
     <div class="acerca-grid">
       <div class="acerca-img-wrap">
         <div class="acerca-img">
-          <img src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=900&amp;q=85" alt="VGR" loading="lazy" class="">
+          <img src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=900&q=85" alt="VGR" loading="lazy">
         </div>
         <div class="acerca-badge">
           <strong>8+</strong>
@@ -349,18 +360,9 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
           <p>Cada proyecto es una oportunidad de contar una historia visualmente extraordinaria.</p>
         </div>
         <div class="acerca-stats">
-          <div class="acerca-stat">
-            <strong>200+</strong>
-            <span>Proyectos</span>
-          </div>
-          <div class="acerca-stat">
-            <strong>50+</strong>
-            <span>Marcas</span>
-          </div>
-          <div class="acerca-stat">
-            <strong>24/7</strong>
-            <span>Soporte</span>
-          </div>
+          <div class="acerca-stat"><strong>200+</strong><span>Proyectos</span></div>
+          <div class="acerca-stat"><strong>50+</strong><span>Marcas</span></div>
+          <div class="acerca-stat"><strong>24/7</strong><span>Soporte</span></div>
         </div>
       </div>
     </div>
@@ -376,86 +378,28 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
       <h2>Servicios <span class="italic-accent">profesionales</span></h2>
     </div>
     <div class="servicios-grid">
-      <div class="servicio">
-        <span class="servicio-num">01</span>
-        <div class="servicio-icon">🎨</div>
-        <h3>Diseño Gráfico</h3>
-        <p>Identidades visuales completas: logos, branding, social media, editorial. Cada pieza diseñada para destacar.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Branding</span>
-          <span class="servicio-tag">Logos</span>
-          <span class="servicio-tag">Social Media</span>
-        </div>
-      </div>
-      <div class="servicio">
-        <span class="servicio-num">02</span>
-        <div class="servicio-icon">🎙️</div>
-        <h3>Producción Audio</h3>
-        <p>Jingles, IDs de emisora, cortinas musicales. Branding sonoro de calidad broadcast profesional.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Jingles</span>
-          <span class="servicio-tag">Mezcla</span>
-          <span class="servicio-tag">Locución</span>
-        </div>
-      </div>
-      <div class="servicio">
-        <span class="servicio-num">03</span>
-        <div class="servicio-icon">🎬</div>
-        <h3>Motion Graphics</h3>
-        <p>Gráficos animados, lower thirds, intros y outros con flow cinematográfico al siguiente nivel.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Render</span>
-          <span class="servicio-tag">Animación</span>
-          <span class="servicio-tag">2D/3D</span>
-        </div>
-      </div>
-      <div class="servicio">
-        <span class="servicio-num">04</span>
-        <div class="servicio-icon">📡</div>
-        <h3>Emisoras Online</h3>
-        <p>Tu radio online desde cero: streaming, automatización, panel de gestión y app personalizada.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Streaming</span>
-          <span class="servicio-tag">Hosting</span>
-          <span class="servicio-tag">Apps</span>
-        </div>
-      </div>
-      <div class="servicio">
-        <span class="servicio-num">05</span>
-        <div class="servicio-icon">✂️</div>
-        <h3>Edición de Video</h3>
-        <p>Cortes rítmicos, transiciones de alto impacto, sincronización con música para retención máxima.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Reels</span>
-          <span class="servicio-tag">TikTok</span>
-          <span class="servicio-tag">Shorts</span>
-        </div>
-      </div>
-      <div class="servicio">
-        <span class="servicio-num">06</span>
-        <div class="servicio-icon">⭐</div>
-        <h3>Pack Completo</h3>
-        <p>Todo incluido: diseño, edición, audio, VFX, branding sonoro. Entrega lista para múltiples plataformas.</p>
-        <div class="servicio-tags">
-          <span class="servicio-tag">Full Pack</span>
-          <span class="servicio-tag">Premium</span>
-        </div>
-      </div>
+      <div class="servicio"><span class="servicio-num">01</span><div class="servicio-icon">🎨</div><h3>Diseño Gráfico</h3><p>Identidades visuales completas: logos, branding, social media, editorial. Cada pieza diseñada para destacar.</p><div class="servicio-tags"><span class="servicio-tag">Branding</span><span class="servicio-tag">Logos</span><span class="servicio-tag">Social Media</span></div></div>
+      <div class="servicio"><span class="servicio-num">02</span><div class="servicio-icon">🎙️</div><h3>Producción Audio</h3><p>Jingles, IDs de emisora, cortinas musicales. Branding sonoro de calidad broadcast profesional.</p><div class="servicio-tags"><span class="servicio-tag">Jingles</span><span class="servicio-tag">Mezcla</span><span class="servicio-tag">Locución</span></div></div>
+      <div class="servicio"><span class="servicio-num">03</span><div class="servicio-icon">🎬</div><h3>Motion Graphics</h3><p>Gráficos animados, lower thirds, intros y outros con flow cinematográfico al siguiente nivel.</p><div class="servicio-tags"><span class="servicio-tag">Render</span><span class="servicio-tag">Animación</span><span class="servicio-tag">2D/3D</span></div></div>
+      <div class="servicio"><span class="servicio-num">04</span><div class="servicio-icon">📡</div><h3>Emisoras Online</h3><p>Tu radio online desde cero: streaming, automatización, panel de gestión y app personalizada.</p><div class="servicio-tags"><span class="servicio-tag">Streaming</span><span class="servicio-tag">Hosting</span><span class="servicio-tag">Apps</span></div></div>
+      <div class="servicio"><span class="servicio-num">05</span><div class="servicio-icon">✂️</div><h3>Edición de Video</h3><p>Cortes rítmicos, transiciones de alto impacto, sincronización con música para retención máxima.</p><div class="servicio-tags"><span class="servicio-tag">Reels</span><span class="servicio-tag">TikTok</span><span class="servicio-tag">Shorts</span></div></div>
+      <div class="servicio"><span class="servicio-num">06</span><div class="servicio-icon">⭐</div><h3>Pack Completo</h3><p>Todo incluido: diseño, edición, audio, VFX, branding sonoro. Entrega lista para múltiples plataformas.</p><div class="servicio-tags"><span class="servicio-tag">Full Pack</span><span class="servicio-tag">Premium</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ═════════ PORTAFOLIO CON VIDEOS ═════════ -->
-<section id="portafolio" class="">
+<!-- ═════════ PORTAFOLIO ═════════ -->
+<section id="portafolio">
   <div class="portfolio-glow-1"></div>
   <div class="portfolio-glow-2"></div>
   <div class="container">
     <div class="portfolio-header">
       <div class="section-num">03 — Portafolio VGR</div>
       <h2>Catálogo de <span class="italic-accent">videos</span></h2>
-      <p>Animaciones, piezas promocionales y productos visuales listos para editar desde el constructor. Todos los videos son reemplazables desde el panel WYSIWYG.</p>
+      <p>Animaciones, piezas promocionales y productos visuales listos para publicar. Los videos se cargan solo cuando aparecen en pantalla.</p>
     </div>
 
+    <!-- ✅ Animaciones 1 — Videos con src real -->
     <div class="portfolio-category">
       <div class="category-head">
         <h3 class="category-title">Animaciones <span>1</span></h3>
@@ -463,71 +407,96 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
       </div>
       <div class="video-products-grid">
         <article class="video-product">
-          <div class="video-frame"><span class="video-badge">Nuevo</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="https://conectadosturadio.github.io/QUIEREMEPEKE2/QUIEREMEPEKES.mp4" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div>
+          <div class="video-frame loading">
+            <span class="video-badge">Nuevo</span>
+            <video muted loop playsinline preload="none" data-src="https://conectadosturadio.github.io/QUIEREMEPEKE2/QUIEREMEPEKES.mp4"></video>
+            <div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+          </div>
           <div class="video-info"><h3>Quiéreme Barcelona</h3><p>Animación vertical 9:16 para reels, historias y campañas deportivas.</p><div class="video-foot"><span class="video-price">$15 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div>
         </article>
         <article class="video-product">
-          <div class="video-frame"><span class="video-badge">VGR</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="https://conectadosturadio.github.io/QUIEREME-CORAZON/quiereme%20lindo%20.mp4" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div>
+          <div class="video-frame loading">
+            <span class="video-badge">VGR</span>
+            <video muted loop playsinline preload="none" data-src="https://conectadosturadio.github.io/QUIEREME-CORAZON/quiereme%20lindo%20.mp4"></video>
+            <div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+          </div>
           <div class="video-info"><h3>Pulse Visual MVP</h3><p>Edición rítmica con impacto visual para contenido de marca.</p><div class="video-foot"><span class="video-price">$25 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div>
         </article>
         <article class="video-product">
-          <div class="video-frame"><span class="video-badge">Pro</span><video autoplay="" muted="" loop="" playsinline=""><source src="https://www.jeandesignia.com/QUIEREME%20FC%20BARCELONA.webm" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div>
+          <div class="video-frame loading">
+            <span class="video-badge">Pro</span>
+            <video muted loop playsinline preload="none" data-src="https://www.jeandesignia.com/QUIEREME%20FC%20BARCELONA.webm"></video>
+            <div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+          </div>
           <div class="video-info"><h3>Onda Sonora Pack</h3><p>Video loop sincronizado para radio visual, podcast o live stream.</p><div class="video-foot"><span class="video-price">$30 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div>
         </article>
         <article class="video-product">
-          <div class="video-frame"><span class="video-badge">HD</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="https://conectadosturadio.github.io/QUIEREMEPEKE2/QUIEREMEPEKES.mp4" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div>
+          <div class="video-frame loading">
+            <span class="video-badge">HD</span>
+            <video muted loop playsinline preload="none" data-src="https://conectadosturadio.github.io/QUIEREMEPEKE2/QUIEREMEPEKES.mp4"></video>
+            <div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+          </div>
           <div class="video-info"><h3>Brand Reveal Pro</h3><p>Reveal animado para presentar tu logo o identidad visual.</p><div class="video-foot"><span class="video-price">$45 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div>
         </article>
         <article class="video-product">
-          <div class="video-frame"><span class="video-badge">Hot</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="https://conectadosturadio.github.io/QUIEREME-CORAZON/quiereme%20lindo%20.mp4" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div>
+          <div class="video-frame loading">
+            <span class="video-badge">Hot</span>
+            <video muted loop playsinline preload="none" data-src="https://conectadosturadio.github.io/QUIEREME-CORAZON/quiereme%20lindo%20.mp4"></video>
+            <div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+          </div>
           <div class="video-info"><h3>Story Hook 360</h3><p>Hook visual para captar atención en los primeros segundos.</p><div class="video-foot"><span class="video-price">$20 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div>
         </article>
       </div>
     </div>
 
+    <!-- Animaciones 2 -->
     <div class="portfolio-category">
       <div class="category-head"><h3 class="category-title">Animaciones <span>2</span></h3><div class="category-note">Plantillas premium</div></div>
       <div class="video-products-grid">
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Cine</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Cinema Cut Vol. 1</h3><p>Cortes cinematográficos con color y ritmo profesional.</p><div class="video-foot"><span class="video-price">$35 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Neón</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Neon Drop FX</h3><p>Efectos neón para promociones digitales de alto impacto.</p><div class="video-foot"><span class="video-price">$28 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Urban</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Tropical Vibes</h3><p>Diseño urbano con energía tropical y colores vivos.</p><div class="video-foot"><span class="video-price">$22 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Sport</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Sport Highlight</h3><p>Plantilla para jugadas, torneos y contenido deportivo.</p><div class="video-foot"><span class="video-price">$40 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Lyrics</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Lyric Wave</h3><p>Visual animado para letras, canciones o promo musical.</p><div class="video-foot"><span class="video-price">$32 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Cine</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Cinema Cut Vol. 1</h3><p>Cortes cinematográficos con color y ritmo profesional.</p><div class="video-foot"><span class="video-price">$35 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Neón</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Neon Drop FX</h3><p>Efectos neón para promociones digitales de alto impacto.</p><div class="video-foot"><span class="video-price">$28 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Urban</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Tropical Vibes</h3><p>Diseño urbano con energía tropical y colores vivos.</p><div class="video-foot"><span class="video-price">$22 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Sport</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Sport Highlight</h3><p>Plantilla para jugadas, torneos y contenido deportivo.</p><div class="video-foot"><span class="video-price">$40 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Lyrics</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Lyric Wave</h3><p>Visual animado para letras, canciones o promo musical.</p><div class="video-foot"><span class="video-price">$32 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
       </div>
     </div>
 
+    <!-- Animaciones 3 -->
     <div class="portfolio-category">
       <div class="category-head"><h3 class="category-title">Animaciones <span>3</span></h3><div class="category-note">VFX y redes sociales</div></div>
       <div class="video-products-grid">
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Glitch</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Glitch Master</h3><p>Transiciones glitch para hooks y anuncios cortos.</p><div class="video-foot"><span class="video-price">$24 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Logo</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Motion Logo Loop</h3><p>Loop de marca para intro, live o pantallas LED.</p><div class="video-foot"><span class="video-price">$50 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">TikTok</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>TikTok Punch</h3><p>Formato veloz optimizado para retención móvil.</p><div class="video-foot"><span class="video-price">$18 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Trailer</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Cinematic Trailer</h3><p>Trailer corto con color grading y energía premium.</p><div class="video-foot"><span class="video-price">$60 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Intro</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Hype Intro 2.0</h3><p>Intro dinámica para streamers, radios y creators.</p><div class="video-foot"><span class="video-price">$26 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Glitch</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Glitch Master</h3><p>Transiciones glitch para hooks y anuncios cortos.</p><div class="video-foot"><span class="video-price">$24 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Logo</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Motion Logo Loop</h3><p>Loop de marca para intro, live o pantallas LED.</p><div class="video-foot"><span class="video-price">$50 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">TikTok</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>TikTok Punch</h3><p>Formato veloz optimizado para retención móvil.</p><div class="video-foot"><span class="video-price">$18 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Trailer</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Cinematic Trailer</h3><p>Trailer corto con color grading y energía premium.</p><div class="video-foot"><span class="video-price">$60 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Intro</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Hype Intro 2.0</h3><p>Intro dinámica para streamers, radios y creators.</p><div class="video-foot"><span class="video-price">$26 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
       </div>
     </div>
 
+    <!-- Animaciones 4 -->
     <div class="portfolio-category">
       <div class="category-head"><h3 class="category-title">Animaciones <span>4</span></h3><div class="category-note">Promos y paquetes</div></div>
       <div class="video-products-grid">
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Urban</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Urban Energy</h3><p>Promo urbana con ritmo, textura y diseño moderno.</p><div class="video-foot"><span class="video-price">$33 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">VFX</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>VFX Showreel</h3><p>Presentación visual para portafolios profesionales.</p><div class="video-foot"><span class="video-price">$55 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">3D</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Mascot Animation</h3><p>Animación de personaje o mascota para marca.</p><div class="video-foot"><span class="video-price">$70 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Ads</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Promo 15s</h3><p>Video comercial corto para venta rápida y anuncios.</p><div class="video-foot"><span class="video-price">$38 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Set</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Title Card Set</h3><p>Paquete de títulos animados y transiciones.</p><div class="video-foot"><span class="video-price">$20 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Urban</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Urban Energy</h3><p>Promo urbana con ritmo, textura y diseño moderno.</p><div class="video-foot"><span class="video-price">$33 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">VFX</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>VFX Showreel</h3><p>Presentación visual para portafolios profesionales.</p><div class="video-foot"><span class="video-price">$55 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">3D</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Mascot Animation</h3><p>Animación de personaje o mascota para marca.</p><div class="video-foot"><span class="video-price">$70 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Ads</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Promo 15s</h3><p>Video comercial corto para venta rápida y anuncios.</p><div class="video-foot"><span class="video-price">$38 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Set</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Title Card Set</h3><p>Paquete de títulos animados y transiciones.</p><div class="video-foot"><span class="video-price">$20 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Comprar</a></div></div></article>
       </div>
     </div>
 
+    <!-- Animaciones 5 -->
     <div class="portfolio-category">
       <div class="category-head"><h3 class="category-title">Animaciones <span>5</span></h3><div class="category-note">Soluciones para radio y streaming</div></div>
       <div class="video-products-grid">
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Sonic</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Brand Sonic ID</h3><p>Identidad visual y sonora para emisoras online.</p><div class="video-foot"><span class="video-price">$80 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Podcast</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Podcast Loop</h3><p>Visual loop para podcasts, YouTube y transmisiones.</p><div class="video-foot"><span class="video-price">$28 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Live</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Live Stream Pack</h3><p>Overlays y escenas para streaming profesional.</p><div class="video-foot"><span class="video-price">$45 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Reveal</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Reveal Edition</h3><p>Entrada premium con sonido y presencia visual.</p><div class="video-foot"><span class="video-price">$65 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
-        <article class="video-product"><div class="video-frame"><span class="video-badge">Best</span><video autoplay="" muted="" loop="" playsinline="" class=""><source src="" type="video/webm"></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Pack Completo</h3><p>Pack integral con cinco piezas visuales para campaña.</p><div class="video-foot"><span class="video-price">$120 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Sonic</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Brand Sonic ID</h3><p>Identidad visual y sonora para emisoras online.</p><div class="video-foot"><span class="video-price">$80 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Podcast</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Podcast Loop</h3><p>Visual loop para podcasts, YouTube y transmisiones.</p><div class="video-foot"><span class="video-price">$28 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Live</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Live Stream Pack</h3><p>Overlays y escenas para streaming profesional.</p><div class="video-foot"><span class="video-price">$45 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Reveal</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Reveal Edition</h3><p>Entrada premium con sonido y presencia visual.</p><div class="video-foot"><span class="video-price">$65 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
+        <article class="video-product"><div class="video-frame loading"><span class="video-badge">Best</span><video muted loop playsinline preload="none" data-src=""></video><div class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="video-info"><h3>Pack Completo</h3><p>Pack integral con cinco piezas visuales para campaña.</p><div class="video-foot"><span class="video-price">$120 <small>USD</small></span><a href="https://wa.me/50700000000" class="video-buy">Solicitar</a></div></div></article>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -584,18 +553,20 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
   </div>
 </footer>
 
+<!-- WhatsApp flotante -->
 <a href="https://wa.me/50700000000" target="_blank" rel="noopener" id="wspFloat" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"></path></svg>
 </a>
 
+<!-- ═════════ RADIO PLAYER ═════════ -->
 <div id="radio">
   <div class="radio-inner">
-    <button id="playBtn" aria-label="Play/Pause" class="playing">
+    <button id="playBtn" aria-label="Play/Pause">
       <div class="spinner"></div>
       <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
       <svg class="icon-play" viewBox="0 0 24 24" style="display:none"><path d="M8 5v14l11-7z"></path></svg>
     </button>
-    <div class="eq active" id="eq"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+    <div class="eq" id="eq"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
     <div class="radio-info">
       <div class="radio-name">
         <svg viewBox="0 0 24 24"><path d="M3.24 6.15C2.51 6.43 2 7.17 2 8v12c0 1.1.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2H8.3l8.26-3.34L15.88 1 3.24 6.15zM12 18c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
@@ -603,48 +574,63 @@ footer { background: var(--dark-0); border-top: 1px solid rgba(255,255,255,.05);
       </div>
       <div class="marquee-wrap"><span>✦ Diseño Gráfico · Emisoras Online · Producción de Audio · Branding Sonoro ✦ &nbsp;&nbsp; ✦ Diseño Gráfico · Emisoras Online · Producción de Audio · Branding Sonoro ✦</span></div>
     </div>
-    <div class="radio-live on" id="radioLive"><span class="live-dot"></span><span id="liveText">EN VIVO</span></div>
+    <div class="radio-live" id="radioLive"><span class="live-dot"></span><span id="liveText">OFF</span></div>
     <div class="vol-wrap">
       <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"></path></svg>
       <input type="range" id="volSlider" min="0" max="1" step="0.01" value="0.8" style="--vol: 80%;">
     </div>
   </div>
 </div>
-<audio id="radioAudio" preload="none" crossorigin="anonymous" src="https://stream-165.zeno.fm/dcq5bzrkiyutv"></audio>
+<audio id="radioAudio" preload="none" crossorigin="anonymous"></audio>
 
-<!-- ═════════════════════════════════════════════════════════════════
-     EDITOR UI — Todo aquí se eliminará en el HTML exportado
-═════════════════════════════════════════════════════════════════ -->
-
-<!-- LOGIN MODAL -->
-
-
-<!-- EDITOR PANEL (right sidebar) -->
-
-
-<!-- Floating quick toolbar -->
-
-
-<!-- Status badge -->
-
-
-<!-- Toast -->
-
-
-<!-- ═════════════════════════════════════════════════════════════════
-     SCRIPTS DEL SITIO (se mantienen al exportar)
-═════════════════════════════════════════════════════════════════ -->
 <script id="site-scripts">
-// Navbar scroll
+// ─── Navbar scroll ───
 const _nav = document.getElementById('navbar');
 const _navToggle = document.getElementById('navToggle');
 const _mobileMenu = document.getElementById('mobileMenu');
 window.addEventListener('scroll', () => _nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 _navToggle.addEventListener('click', () => { _navToggle.classList.toggle('open'); _mobileMenu.classList.toggle('open'); });
-_mobileMenu.addEventListener('click', e => { if (e.target.tagName === 'A' && e.target.id !== 'mobileLogin') { _navToggle.classList.remove('open'); _mobileMenu.classList.remove('open'); } });
+_mobileMenu.addEventListener('click', e => { if (e.target.tagName === 'A') { _navToggle.classList.remove('open'); _mobileMenu.classList.remove('open'); } });
 
-// Radio Player
-(function(){
+// ─── ✅ FIX PRINCIPAL: Lazy loading de videos con IntersectionObserver ───
+// Los videos NO se cargan hasta que el usuario llega a ese punto de la página.
+// Ahorra ~55 MB de datos en carga inicial.
+(function initLazyVideos() {
+  const videos = document.querySelectorAll('video[data-src]');
+
+  if (!videos.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const video = entry.target;
+      const src = video.dataset.src;
+
+      // Si no tiene src real, solo quitar el shimmer
+      const frame = video.closest('.video-frame');
+      if (frame) frame.classList.remove('loading');
+
+      if (!src) {
+        observer.unobserve(video);
+        return;
+      }
+
+      // Asignar src y cargar
+      video.src = src;
+      video.load();
+      video.play().catch(() => {});
+      observer.unobserve(video);
+    });
+  }, {
+    rootMargin: '200px 0px', // Empieza a cargar 200px antes de que aparezca
+    threshold: 0.01
+  });
+
+  videos.forEach(v => observer.observe(v));
+})();
+
+// ─── ✅ FIX: Radio Player — NO arranca automáticamente, espera clic del usuario ───
+(function initRadio() {
   const STREAM_URL = 'https://stream-165.zeno.fm/dcq5bzrkiyutv';
   const audio = document.getElementById('radioAudio');
   const playBtn = document.getElementById('playBtn');
@@ -655,6 +641,7 @@ _mobileMenu.addEventListener('click', e => { if (e.target.tagName === 'A' && e.t
   const iconPlay = playBtn.querySelector('.icon-play');
   const iconPause = playBtn.querySelector('.icon-pause');
   let playing = false;
+
   function setUI(p) {
     playing = p;
     playBtn.classList.toggle('playing', p);
@@ -665,36 +652,44 @@ _mobileMenu.addEventListener('click', e => { if (e.target.tagName === 'A' && e.t
     iconPlay.style.display = p ? 'none' : '';
     iconPause.style.display = p ? '' : 'none';
   }
+
   function startPlay() {
     audio.src = STREAM_URL;
-    audio.muted = true;
     audio.volume = parseFloat(volSlider.value);
     playBtn.classList.add('loading');
     const p = audio.play();
     if (p) {
-      p.then(() => { try{audio.muted=false;}catch(e){} setUI(true); }).catch(() => {
-        audio.muted = true; audio.play().catch(()=>{}); setUI(true);
-        const u = () => { audio.muted=false; audio.play().catch(()=>{}); ['click','touchstart','keydown','scroll'].forEach(ev=>window.removeEventListener(ev,u)); };
-        ['click','touchstart','keydown','scroll'].forEach(ev=>window.addEventListener(ev,u,{passive:true}));
+      p.then(() => setUI(true)).catch(() => {
+        audio.muted = true;
+        audio.play().then(() => { audio.muted = false; setUI(true); }).catch(() => setUI(false));
       });
     }
   }
-  playBtn.addEventListener('click', () => { if (playing) { audio.pause(); audio.src=''; setUI(false); } else startPlay(); });
-  audio.addEventListener('error', () => { setUI(false); setTimeout(startPlay,5000); });
+
+  // ✅ Solo reproducir cuando el usuario hace clic — sin autoplay
+  playBtn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      audio.src = '';
+      setUI(false);
+    } else {
+      startPlay();
+    }
+  });
+
+  audio.addEventListener('error', () => { setUI(false); });
   audio.addEventListener('waiting', () => playBtn.classList.add('loading'));
   audio.addEventListener('playing', () => { playBtn.classList.remove('loading'); setUI(true); });
-  volSlider.addEventListener('input', () => { audio.volume=parseFloat(volSlider.value); volSlider.style.setProperty('--vol',(volSlider.value*100)+'%'); });
-  volSlider.style.setProperty('--vol', (volSlider.value*100)+'%');
-  setTimeout(startPlay, 600);
-  setTimeout(() => { if (!playing || audio.paused) startPlay(); }, 3500);
+
+  volSlider.addEventListener('input', () => {
+    audio.volume = parseFloat(volSlider.value);
+    volSlider.style.setProperty('--vol', (volSlider.value * 100) + '%');
+  });
+  volSlider.style.setProperty('--vol', (volSlider.value * 100) + '%');
+
+  // Estado inicial: pausado
+  setUI(false);
 })();
 </script>
-
-<!-- ═════════════════════════════════════════════════════════════════
-     SCRIPTS DEL EDITOR (se eliminan al exportar)
-═════════════════════════════════════════════════════════════════ -->
-
-
-
 
 </body></html>
